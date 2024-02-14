@@ -1,15 +1,22 @@
 {
     "name": "ws_task",
     "version": "1.0.0",
-    "description": "Template for the WebSocket remote control task",
+    "description": "WebSocket application with Node.js",
     "main": "index.js",
     "type": "module",
+    "engines": {
+        "node": ">=20.0.0"
+      },
     "scripts": {
         "start": "node ./index.js",
         "start:dev": "nodemon ./index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "author": "Andrei Auchynnikau",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/RVitaly1978/battleship.git"
+      },
+    "author": "Vital Raicheu <rvitaly1978@gmail.com>",
     "keywords": [],
     "license": "ISC",
     "devDependencies": {
