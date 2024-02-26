@@ -140,6 +140,10 @@ export class Games {
       ? this.getHitsAroundShip(enemy, ship!)
       : []
 
+    const hitsShipKilled = status === AttackStatus.Killed
+      ? this.getShipCoords(ship!).filter(([shipX, shipY]) => shipX !== x || shipY !== y).map(([x, y]) => ({ x, y }))
+      : []
+
     enemy.hits.push(...hitsAround)
 
     if (status === AttackStatus.Miss) {
@@ -158,6 +162,20 @@ export class Games {
         connectionId,
       }))
 
+    const hitsShipKilledResponse = hitsShipKilled.map(({ x, y }) => {
+      return game.players
+        .filter(({ player }) => player.type !== PlayerType.Bot)
+        .map(({ connectionId }) => ({
+          type: MsgType.Attack,
+          data: {
+            currentPlayer: player.index,
+            position: { x, y },
+            status: AttackStatus.Killed,
+          } as AttackResponseData,
+          connectionId,
+        }))
+    }).flat()
+
     const hitsAroundResponse = hitsAround.map(({ x, y }) => {
       return game.players
         .filter(({ player }) => player.type !== PlayerType.Bot)
@@ -172,7 +190,7 @@ export class Games {
         }))
     }).flat()
 
-    return [...hitResponse, ...hitsAroundResponse]
+    return [...hitResponse, ...hitsShipKilledResponse, ...hitsAroundResponse]
   }
 
   isGameOver (gameId: EntityId) {

@@ -16,21 +16,17 @@ export const getHitsAround = (coords: number[][]) => {
 }
 
 export const getRandomAttackCoords = (enemy: GamePlayer): Position => {
-  const fieldIds: number[] = []
-
-  for (let i = 0; i < 100; i += 1) {
-    fieldIds.push(i)
-  }
+  const fieldIds = new Array(100).fill(null).map((_, idx) => idx)
 
   let idx = Math.round(Math.random() * (fieldIds.length - 1))
-  let y = Math.floor(idx / 10)
-  let x = idx - y * 10
+  let y = Math.floor(fieldIds[idx] / 10)
+  let x = fieldIds[idx] - y * 10
   fieldIds.splice(idx, 1)
 
   while (gamesDB.playerHasHit(enemy, x, y) && fieldIds.length) {
     idx = Math.round(Math.random() * (fieldIds.length - 1))
-    y = Math.floor(idx / 10)
-    x = idx - y * 10
+    y = Math.floor(fieldIds[idx] / 10)
+    x = fieldIds[idx] - y * 10
     fieldIds.splice(idx, 1)
   }
 
@@ -50,10 +46,7 @@ export const getRandomShips = (): Ship[] => {
     }
   }
 
-  const fieldIds: number[] = []
-  for (let i = 0; i < 100; i += 1) {
-    fieldIds.push(i)
-  }
+  const fieldIds = new Array(100).fill(null).map((_, idx) => idx)
 
   return ships.map(length => {
     const type = shipTypes[length - 1]
@@ -64,8 +57,8 @@ export const getRandomShips = (): Ship[] => {
 
     while (!placed) {
       const idx = Math.round(Math.random() * (fieldIds.length - 1))
-      y = Math.floor(idx / 10)
-      x = idx - y * 10
+      y = Math.floor(fieldIds[idx] / 10)
+      x = fieldIds[idx] - y * 10
 
       direction = Math.random() > 0.5 ? true : false
 
