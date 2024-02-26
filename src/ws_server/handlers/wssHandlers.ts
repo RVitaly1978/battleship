@@ -6,7 +6,7 @@ import { connectionsDB } from '../database'
 import {
   parseRequestMsg, logWebSocketConnection,
   logWebsocketMessageHandlingError, logWebSocketClose, logWebSocketError,
-  logWSServerError, logWSServerClose,
+  logWSServerError, logWSServerClose, logRequest,
 } from '../helpers'
 
 export const connectionHandler = (ws: WebSocket, request: IncomingMessage) => {
@@ -17,6 +17,7 @@ export const connectionHandler = (ws: WebSocket, request: IncomingMessage) => {
   ws.on('message', (message: string) => {
     try {
       const msg = parseRequestMsg(message)
+      logRequest(msg)
       wsMessageHandler(msg, id, request)
     } catch (err) {
       logWebsocketMessageHandlingError(request)

@@ -1,11 +1,12 @@
 import { IncomingMessage } from 'node:http'
-import { MsgType, ResponseData } from '../types'
+import { MsgType, ResponseData, Message } from '../types'
 
 const ansiCodes = {
   green: '\x1b[32m',
   blue: '\x1b[34m',
   yellow: '\x1b[33m',
   red: '\x1b[31m',
+  table240: '\x1b[38;5;240m',
   table245: '\x1b[38;5;245m',
   end: '\x1b[0m',
 }
@@ -20,6 +21,8 @@ export const red = (str: string | number | undefined | null) =>
   `${ansiCodes.red}${str}${ansiCodes.end}`
 export const table245 = (str: string | number | undefined | null) =>
   `${ansiCodes.table245}${str}${ansiCodes.end}`
+export const table240 = (str: string | number | undefined | null) =>
+  `${ansiCodes.table240}${str}${ansiCodes.end}`
 
 export const logProcessTermination = (signal: string | null, code: number | null) => {
   const reason = signal || code ? `[${red(signal)}][${red(code)}]` : `[${red('ERROR')}]`
@@ -62,6 +65,10 @@ export const logUnknownMessageType = (type: string, request: IncomingMessage) =>
   console.log(`[${red('WS')}][${red('ERROR')}] Socket error. Origin ${request.headers.origin}. Error message: unknown message type ${red(type)}.`)
 }
 
+export const logRequest = (msg: Message) => {
+  console.log(table240(`[<-]:[${msg.type}]: ${JSON.stringify(msg.data)}`))
+}
+
 export const logResponse = (type: MsgType, data: ResponseData) => {
-  console.log(table245(`[WS]:[${type}]: ${JSON.stringify(data)}`))
+  console.log(table245(`[->]:[${type}]: ${JSON.stringify(data)}`))
 }
