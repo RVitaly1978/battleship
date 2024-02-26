@@ -45,5 +45,7 @@ Open browser on http://localhost:8181
 
 1. You cannot log in if a user with the same name is already logged in.
 2. You cannot open more than one game room.
-3. You will lose your turn if you hit a cell that has already been hit.
-4. You will lose the game if you reload the page.
+3. The player who created the room goes first.
+4. You will lose your turn if you hit a cell that has already been hit.
+5. You will lose the game if you reload the page.
+6. Bots are not included in the winners table.
