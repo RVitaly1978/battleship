@@ -1,31 +1,51 @@
-# RSSchool NodeJS websocket task template
-> Static http server and base task packages. 
-> By default WebSocket client tries to connect to the 3000 port.
+# WebSocket Server for Battleship
 
-## Installation
-1. Clone/download repo
-2. `npm install`
+## Clone repository
 
-## Usage
-**Development**
+```bash
+https://github.com/RVitaly1978/battleship.git
+```
 
-`npm run start:dev`
+## Checkout to `develop` branch
 
-* App served @ `http://localhost:8181` with nodemon
+```bash
+git checkout develop
+```
 
-**Production**
+## Install dependencies
 
-`npm run start`
+***Note***: Node.js required version is **20 LTS**
 
-* App served @ `http://localhost:8181` without nodemon
+```bash
+npm install
+```
 
----
+## Create a `.env` file (copy and rename `.env.example`) in the root directory with the following content:
 
-**All commands**
+```
+HTTP_PORT=8181
+WS_PORT=3000
+```
 
-Command | Description
---- | ---
-`npm run start:dev` | App served @ `http://localhost:8181` with nodemon
-`npm run start` | App served @ `http://localhost:8181` without nodemon
+## Run application
 
-**Note**: replace `npm` with `yarn` in `package.json` if you use yarn.
+```bash
+# in develop mode
+npm run start
+
+# in develop mode (tsx watch)
+npm run start:dev
+```
+
+## Run Client
+
+Open browser on http://localhost:8181
+
+## Rules Notes
+
+1. You cannot log in if a user with the same name is already logged in.
+2. You cannot open more than one game room.
+3. The player who created the room goes first.
+4. You will lose your turn if you hit a cell that has already been hit.
+5. You will lose the game if you reload the page.
+6. Bots are not included in the winners table.
